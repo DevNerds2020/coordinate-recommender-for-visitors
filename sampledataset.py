@@ -13,27 +13,27 @@ def generate_sample_dataset(num_locations, num_visitors):
         locations.append((i, lat, lon))
 
     # Generate random money spent for each location
-    money_spent = [random.randint(50, 200) for _ in range(num_locations)]
+    weight = [random.randint(1, 50) for _ in range(num_locations)]
 
     # Cluster the locations
     clusters = [[] for _ in range(num_visitors)]
     for i, loc in enumerate(locations):
         cluster_id = i % num_visitors
-        clusters[cluster_id].append(loc + (money_spent[i],))
+        clusters[cluster_id].append(loc + (weight[i],))
 
     return clusters
 
 def save_dataset_to_csv(clusters):
     with open('sample_dataset.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['Location ID', 'Latitude', 'Longitude', 'Money Spent'])
+        writer.writerow(['Location ID', 'Latitude', 'Longitude', 'Weight'])
         for i, cluster in enumerate(clusters):
             for location in cluster:
                 writer.writerow([location[0], location[1], location[2], location[3]])
 
 # Set the number of locations and visitors
-num_locations = 500
-num_visitors = 25
+num_locations = 5000
+num_visitors = 50
 
 # Generate the sample dataset
 clusters = generate_sample_dataset(num_locations, num_visitors)
