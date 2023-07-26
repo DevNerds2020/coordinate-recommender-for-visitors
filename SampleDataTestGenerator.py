@@ -32,7 +32,7 @@ def save_dataset_to_csv(clusters):
                 writer.writerow([location[0], location[1], location[2], location[3]])
 
 # Set the number of locations and visitors
-num_locations = 5000
+num_locations = 1250
 num_visitors = 50
 
 # Generate the sample dataset
