@@ -5,10 +5,10 @@ from sklearn.cluster import AgglomerativeClustering, KMeans, DBSCAN, OPTICS, Bir
 from numba import njit, prange
 import itertools
 import math
-import flask
+from flask import Flask
 
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 
 
 def convert_list_to_df(clusters):
@@ -260,5 +260,23 @@ def held_karp_algorithm(start, locations):
                     break
 
     return path, optimal_distance
-# app.route('/cluster_data', methods=['POST'])
-# def main_func
+
+
+@app.route('/process_locations', methods=['POST'])
+def process_locations():
+    try:
+        data = request.get_json()
+        locations = data.get('locations', [])
+        
+        # Your processing logic goes here
+        # For demonstration purposes, let's simply print the received locations
+        df = convert_list_to_df(locations)
+
+        # Return a response indicating successful processing
+        response = {'message': 'Locations received and processed successfully.'}
+        return jsonify(response), 200
+
+    except Exception as e:
+        # Return an error response if something goes wrong
+        response = {'error': str(e)}
+        return jsonify(response), 400
